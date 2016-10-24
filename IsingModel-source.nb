@@ -1,0 +1,487 @@
+(* Content-type: application/mathematica *)
+
+(*** Wolfram Notebook File ***)
+(* http://www.wolfram.com/nb *)
+
+(* CreatedBy='Mathematica 6.0' *)
+
+(*CacheID: 234*)
+(* Internal cache information:
+NotebookFileLineBreakTest
+NotebookFileLineBreakTest
+NotebookDataPosition[       145,          7]
+NotebookDataLength[     17299,        477]
+NotebookOptionsPosition[     16068,        430]
+NotebookOutlinePosition[     16672,        454]
+CellTagsIndexPosition[     16629,        451]
+WindowTitle->Ising Model - Source
+WindowFrame->Normal*)
+
+(* Beginning of Notebook Content *)
+Notebook[{
+
+Cell[CellGroupData[{
+Cell["Ising Model", "Section",
+ CellFrameColor->RGBColor[
+  0.6449835965514611, 0.758632791638056, 0.2516823071641108],
+ FontColor->RGBColor[
+  0.6449835965514611, 0.758632791638056, 0.2516823071641108]],
+
+Cell[BoxData[{
+ RowBox[{
+  RowBox[{"IsingStep", "[", 
+   RowBox[{"{", 
+    RowBox[{"a_", ",", "mask_"}], "}"}], "]"}], ":=", 
+  RowBox[{"{", 
+   RowBox[{
+    RowBox[{"MapThread", "[", 
+     RowBox[{
+      RowBox[{
+       RowBox[{"If", "[", 
+        RowBox[{
+         RowBox[{
+          RowBox[{"#2", "==", "2"}], "&&", 
+          RowBox[{"#3", "==", "1"}]}], ",", 
+         RowBox[{"1", "-", "#1"}], ",", "#1"}], "]"}], "&"}], ",", 
+      RowBox[{"{", 
+       RowBox[{"a", ",", 
+        RowBox[{"ListConvolve", "[", 
+         RowBox[{
+          RowBox[{"{", 
+           RowBox[{
+            RowBox[{"{", 
+             RowBox[{"0", ",", "1", ",", "0"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"1", ",", "0", ",", "1"}], "}"}], ",", 
+            RowBox[{"{", 
+             RowBox[{"0", ",", "1", ",", "0"}], "}"}]}], "}"}], ",", "a", ",",
+           "2"}], "]"}], ",", "mask"}], "}"}], ",", "2"}], "]"}], ",", 
+    RowBox[{"1", "-", "mask"}]}], "}"}]}], "\n", 
+ RowBox[{
+  RowBox[{"Mask", "[", "list_", "]"}], ":=", 
+  RowBox[{"Array", "[", 
+   RowBox[{
+    RowBox[{
+     RowBox[{"Mod", "[", 
+      RowBox[{
+       RowBox[{"#1", "+", "#2"}], ",", "2"}], "]"}], "&"}], ",", 
+    RowBox[{"Dimensions", "[", "list", "]"}]}], "]"}]}]}], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.3878320619420223`*^9, 3.387832062674841*^9}, 
+   3.387832098021101*^9, {3.38783214021189*^9, 3.387832142105679*^9}, {
+   3.387832909903089*^9, 3.387832914136074*^9}, {3.400715568933709*^9, 
+   3.400715571168582*^9}},
+ CellID->950930497],
+
+Cell[CellGroupData[{
+
+Cell[BoxData[
+ RowBox[{"Manipulate", "[", 
+  RowBox[{
+   RowBox[{"With", "[", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"list", "=", 
+       RowBox[{"Partition", "[", 
+        RowBox[{
+         RowBox[{"RandomSample", "[", 
+          RowBox[{"Join", "[", 
+           RowBox[{
+            RowBox[{"Table", "[", 
+             RowBox[{"0", ",", 
+              RowBox[{"{", 
+               RowBox[{"k", ",", "1", ",", "m"}], "}"}]}], "]"}], ",", 
+            RowBox[{"Table", "[", 
+             RowBox[{"1", ",", 
+              RowBox[{"{", 
+               RowBox[{"k", ",", "1", ",", 
+                RowBox[{
+                 SuperscriptBox["100", "2"], "-", "m"}]}], "}"}]}], "]"}]}], 
+           "]"}], "]"}], ",", "100"}], "]"}]}], "}"}], ",", 
+     RowBox[{
+      RowBox[{"SeedRandom", "[", "sr", "]"}], ";", 
+      RowBox[{"ArrayPlot", "[", 
+       RowBox[{
+        RowBox[{"If", "[", 
+         RowBox[{
+          RowBox[{"view", "\[Equal]", "\"\<last step\>\""}], ",", 
+          RowBox[{
+           RowBox[{"Nest", "[", 
+            RowBox[{"IsingStep", ",", 
+             RowBox[{"{", 
+              RowBox[{"list", ",", 
+               RowBox[{"Mask", "[", "list", "]"}]}], "}"}], ",", "steps"}], 
+            "]"}], "[", 
+           RowBox[{"[", "1", "]"}], "]"}], ",", 
+          RowBox[{
+           RowBox[{
+            RowBox[{"#", "[", 
+             RowBox[{"[", 
+              RowBox[{"1", ",", "cut"}], "]"}], "]"}], "&"}], "/@", 
+           RowBox[{"NestList", "[", 
+            RowBox[{"IsingStep", ",", 
+             RowBox[{"{", 
+              RowBox[{"list", ",", 
+               RowBox[{"Mask", "[", "list", "]"}]}], "}"}], ",", "steps"}], 
+            "]"}]}]}], "]"}], ",", 
+        RowBox[{"ImageSize", "\[Rule]", 
+         RowBox[{"{", 
+          RowBox[{"500", ",", "320"}], "}"}]}]}], "]"}]}]}], "]"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"steps", ",", "50"}], "}"}], ",", "1", ",", "50", ",", "1"}], 
+    "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"m", ",", "3000", ",", "\"\<spin density\>\""}], "}"}], ",", 
+     "1", ",", 
+     SuperscriptBox["100", "2"], ",", "1"}], "}"}], ",", 
+   "\[IndentingNewLine]", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"cut", ",", "1", ",", "\"\<evolution slice\>\""}], "}"}], ",", 
+     "1", ",", "100", ",", "1"}], "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"view", ",", "\"\<evolution slices\>\""}], "}"}], ",", 
+     RowBox[{"{", 
+      RowBox[{"\"\<last step\>\"", ",", "\"\<evolution slices\>\""}], "}"}]}],
+     "}"}], ",", 
+   RowBox[{"{", 
+    RowBox[{
+     RowBox[{"{", 
+      RowBox[{"sr", ",", "10000", ",", "\"\<random seed\>\""}], "}"}], ",", 
+     "1000", ",", "20000", ",", "1"}], "}"}], ",", 
+   RowBox[{"SaveDefinitions", "\[Rule]", "True"}]}], "]"}]], "Input",
+ CellChangeTimes->{
+  3.35696210375764*^9, {3.38781882386549*^9, 3.38781885494937*^9}, {
+   3.387819059076413*^9, 3.387819068809795*^9}, {3.387819132094796*^9, 
+   3.387819136084573*^9}, {3.387819681245569*^9, 3.387819690517063*^9}, {
+   3.3878202410848513`*^9, 3.3878202522640247`*^9}, {3.387820294704023*^9, 
+   3.387820375738117*^9}, {3.387820415435459*^9, 3.387820431240095*^9}, {
+   3.387820461524479*^9, 3.387820463640383*^9}, {3.387820625034019*^9, 
+   3.3878206290085783`*^9}, {3.38783184344521*^9, 3.3878318462357397`*^9}, {
+   3.3878320727182627`*^9, 3.387832074778616*^9}, 3.387832122367497*^9, {
+   3.387832155628951*^9, 3.387832162778113*^9}, {3.387832739140913*^9, 
+   3.3878327598353577`*^9}, 3.387832813286996*^9, 3.3903337323061666`*^9, {
+   3.390334266599452*^9, 3.3903343131901817`*^9}, {3.400713654851663*^9, 
+   3.400713660416606*^9}, {3.400714025401515*^9, 3.400714049446804*^9}, {
+   3.400714255513927*^9, 3.400714392313665*^9}, {3.400715066897891*^9, 
+   3.400715133601448*^9}, {3.400715181589197*^9, 3.4007151829481277`*^9}, {
+   3.400715216163763*^9, 3.400715306454357*^9}, {3.400715349967188*^9, 
+   3.400715351359613*^9}, {3.400715411531065*^9, 3.4007154412631407`*^9}, {
+   3.400715476392606*^9, 3.4007154765104227`*^9}, {3.400882948772811*^9, 
+   3.400882961295965*^9}, {3.400882995865322*^9, 3.400883056318543*^9}, {
+   3.400883148463963*^9, 3.400883187134472*^9}, {3.400883228910474*^9, 
+   3.400883245691687*^9}, 3.400884913046875*^9},
+ CellID->715562105],
+
+Cell[BoxData[
+ TagBox[
+  StyleBox[
+   DynamicModuleBox[{$CellContext`cut$$ = 1, $CellContext`m$$ = 
+    3000, $CellContext`sr$$ = 10000, $CellContext`steps$$ = 
+    50, $CellContext`view$$ = "evolution slices", Typeset`show$$ = True, 
+    Typeset`bookmarkList$$ = {}, Typeset`bookmarkMode$$ = "Menu", 
+    Typeset`animator$$, Typeset`animvar$$ = 1, Typeset`name$$ = 
+    "\"untitled\"", Typeset`specs$$ = {{{
+       Hold[$CellContext`steps$$], 50}, 1, 50, 1}, {{
+       Hold[$CellContext`m$$], 3000, "spin density"}, 1, 10000, 1}, {{
+       Hold[$CellContext`cut$$], 1, "evolution slice"}, 1, 100, 1}, {{
+       Hold[$CellContext`view$$], "evolution slices"}, {
+      "last step", "evolution slices"}}, {{
+       Hold[$CellContext`sr$$], 10000, "random seed"}, 1000, 20000, 1}}, 
+    Typeset`size$$ = {500., {158., 162.}}, Typeset`update$$ = 0, 
+    Typeset`initDone$$, Typeset`skipInitDone$$ = 
+    False, $CellContext`steps$1501$$ = 0, $CellContext`m$1502$$ = 
+    0, $CellContext`cut$1503$$ = 0, $CellContext`view$1504$$ = 
+    False, $CellContext`sr$1505$$ = 0}, 
+    DynamicBox[Manipulate`ManipulateBoxes[
+     1, StandardForm, 
+      "Variables" :> {$CellContext`cut$$ = 1, $CellContext`m$$ = 
+        3000, $CellContext`sr$$ = 10000, $CellContext`steps$$ = 
+        50, $CellContext`view$$ = "evolution slices"}, "ControllerVariables" :> {
+        Hold[$CellContext`steps$$, $CellContext`steps$1501$$, 0], 
+        Hold[$CellContext`m$$, $CellContext`m$1502$$, 0], 
+        Hold[$CellContext`cut$$, $CellContext`cut$1503$$, 0], 
+        Hold[$CellContext`view$$, $CellContext`view$1504$$, False], 
+        Hold[$CellContext`sr$$, $CellContext`sr$1505$$, 0]}, 
+      "OtherVariables" :> {
+       Typeset`show$$, Typeset`bookmarkList$$, Typeset`bookmarkMode$$, 
+        Typeset`animator$$, Typeset`animvar$$, Typeset`name$$, 
+        Typeset`specs$$, Typeset`size$$, Typeset`update$$, Typeset`initDone$$,
+         Typeset`skipInitDone$$}, "Body" :> 
+      With[{$CellContext`list$ = Partition[
+           RandomSample[
+            Join[
+             Table[0, {$CellContext`k, 1, $CellContext`m$$}], 
+             Table[1, {$CellContext`k, 1, 100^2 - $CellContext`m$$}]]], 100]},
+         SeedRandom[$CellContext`sr$$]; ArrayPlot[
+          If[$CellContext`view$$ == "last step", 
+           Part[
+            Nest[$CellContext`IsingStep, {$CellContext`list$, 
+              $CellContext`Mask[$CellContext`list$]}, $CellContext`steps$$], 
+            1], 
+           Map[Part[#, 1, $CellContext`cut$$]& , 
+            NestList[$CellContext`IsingStep, {$CellContext`list$, 
+              $CellContext`Mask[$CellContext`list$]}, $CellContext`steps$$]]],
+           ImageSize -> {500, 320}]], 
+      "Specifications" :> {{{$CellContext`steps$$, 50}, 1, 50, 
+         1}, {{$CellContext`m$$, 3000, "spin density"}, 1, 10000, 
+         1}, {{$CellContext`cut$$, 1, "evolution slice"}, 1, 100, 
+         1}, {{$CellContext`view$$, "evolution slices"}, {
+         "last step", "evolution slices"}}, {{$CellContext`sr$$, 10000, 
+          "random seed"}, 1000, 20000, 1}}, "Options" :> {}, 
+      "DefaultOptions" :> {ControllerLinking -> True}],
+     ImageSizeCache->{547., {255., 260.}},
+     SingleEvaluation->True],
+    Deinitialization:>None,
+    DynamicModuleValues:>{},
+    Initialization:>(({$CellContext`IsingStep[{
+           Pattern[$CellContext`a, 
+            Blank[]], 
+           Pattern[$CellContext`mask, 
+            Blank[]]}] := {
+          MapThread[If[
+            And[#2 == 2, #3 == 1], 1 - #, #]& , {$CellContext`a, 
+            
+            ListConvolve[{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}}, $CellContext`a, 
+             2], $CellContext`mask}, 2], 
+          1 - $CellContext`mask}, $CellContext`Mask[
+          Pattern[$CellContext`list, 
+           Blank[]]] := Array[Mod[# + #2, 2]& , 
+          Dimensions[$CellContext`list]]}; Typeset`initDone$$ = True); 
+     ReleaseHold[{{
+         HoldComplete[$CellContext`IsingStep[{
+             Pattern[$CellContext`a, 
+              Blank[]], 
+             Pattern[$CellContext`mask, 
+              Blank[]]}] := {
+            MapThread[If[
+              And[#2 == 2, #3 == 1], 1 - #, #]& , {$CellContext`a, 
+              
+              ListConvolve[{{0, 1, 0}, {1, 0, 1}, {0, 1, 0}}, $CellContext`a, 
+               2], $CellContext`mask}, 2], 1 - $CellContext`mask}], 
+         HoldComplete[Null], 
+         HoldComplete[$CellContext`Mask[
+            Pattern[$CellContext`list, 
+             Blank[]]] := Array[Mod[# + #2, 2]& , 
+            Dimensions[$CellContext`list]]]}}]; Typeset`initDone$$ = True),
+    SynchronousInitialization->True,
+    UnsavedVariables:>{Typeset`initDone$$},
+    UntrackedVariables:>{Typeset`size$$}], "Manipulate",
+   Deployed->True,
+   StripOnInput->False],
+  Manipulate`InterpretManipulate[1]]], "Output",
+ CellID->1033592697]
+}, Open  ]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell["THIS NOTEBOOK IS THE SOURCE CODE FROM", "Text",
+ CellFrame->{{0, 0}, {0, 1}},
+ CellMargins->{{48, 10}, {4, 28}},
+ CellGroupingRules->{"SectionGrouping", 25},
+ CellFrameMargins->{{48, 48}, {6, 5}},
+ CellFrameColor->RGBColor[0.691905, 0.790311, 0.300252],
+ FontFamily->"Helvetica",
+ FontSize->10,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.691905, 0.790311, 0.300252]],
+
+Cell[TextData[{
+ "\"",
+ ButtonBox["Ising Model",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/IsingModel/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/IsingModel/"],
+ "\"",
+ " from ",
+ ButtonBox["The Wolfram Demonstrations Project",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+ "\[ParagraphSeparator]\[NonBreakingSpace]",
+ ButtonBox["http://demonstrations.wolfram.com/IsingModel/",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/IsingModel/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/IsingModel/"]
+}], "Text",
+ CellMargins->{{48, Inherited}, {0, Inherited}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.5]]
+}, Open  ]],
+
+Cell[CellGroupData[{
+
+Cell[" ", "Text",
+ CellFrame->{{0, 0}, {0, 1}},
+ CellMargins->{{48, 10}, {4, 28}},
+ CellGroupingRules->{"SectionGrouping", 25},
+ CellFrameMargins->{{48, 48}, {6, 5}},
+ CellFrameColor->RGBColor[0.691905, 0.790311, 0.300252],
+ FontFamily->"Helvetica",
+ FontSize->10,
+ FontWeight->"Bold",
+ FontColor->RGBColor[0.691905, 0.790311, 0.300252]],
+
+Cell[TextData[{
+ "Contributed by: ",
+ ButtonBox["Enrique Zeleny",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Enrique+Zeleny"]\
+, None},
+  ButtonNote->
+   "http://demonstrations.wolfram.com/author.html?author=Enrique+Zeleny"]
+}], "Text",
+ CellDingbat->"\[FilledSmallSquare]",
+ CellMargins->{{66, 48}, {2, 4}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.6],
+ CellID->1033076067],
+
+Cell[TextData[{
+ "Based on work by: ",
+ ButtonBox["Stephen Wolfram",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/author.html?author=Stephen+\
+Wolfram"], None}]
+}], "Text",
+ CellDingbat->"\[FilledSmallSquare]",
+ CellMargins->{{66, 48}, {2, 4}},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.6],
+ CellID->387912303],
+
+Cell[TextData[{
+ "A full-function Wolfram ",
+ StyleBox["Mathematica",
+  FontSlant->"Italic"],
+ " 6 system is required to edit this notebook.\n",
+ StyleBox[ButtonBox["GET WOLFRAM MATHEMATICA 6 \[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://www.wolfram.com/products/mathematica/"], None},
+  ButtonNote->"http://www.wolfram.com/products/mathematica/"],
+  FontFamily->"Helvetica",
+  FontWeight->"Bold",
+  FontSlant->"Italic",
+  FontColor->RGBColor[1, 0.42, 0]]
+}], "Text",
+ CellFrame->True,
+ CellMargins->{{48, 68}, {8, 28}},
+ CellFrameMargins->12,
+ CellFrameColor->RGBColor[0.865507, 0.90634, 0.680751],
+ CellChangeTimes->{3.3750111182355957`*^9},
+ ParagraphSpacing->{1., 1.},
+ FontFamily->"Verdana",
+ FontSize->10,
+ FontColor->GrayLevel[0.411765],
+ Background->RGBColor[0.986023, 0.991363, 0.969818]],
+
+Cell[TextData[{
+ "\[Copyright] ",
+ StyleBox[ButtonBox["The Wolfram Demonstrations Project & Contributors",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Terms of Use",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/termsofuse.html"], None},
+  ButtonNote->"http://demonstrations.wolfram.com/termsofuse.html"],
+  FontColor->GrayLevel[0.6]],
+ "\[ThickSpace]\[ThickSpace]\[ThickSpace]|\[ThickSpace]\[ThickSpace]\
+\[ThickSpace]",
+ StyleBox[ButtonBox["Make a new version of this Demonstration \
+\[RightGuillemet]",
+  BaseStyle->"Hyperlink",
+  ButtonData->{
+    URL["http://demonstrations.wolfram.com/participate/upload.jsp?id=\
+IsingModel"], None},
+  ButtonNote->None],
+  FontColor->GrayLevel[0.6]]
+}], "Text",
+ CellFrame->{{0, 0}, {0, 0.5}},
+ CellMargins->{{48, 10}, {20, 50}},
+ CellFrameMargins->{{6, 0}, {6, 6}},
+ CellFrameColor->GrayLevel[0.6],
+ FontFamily->"Verdana",
+ FontSize->9,
+ FontColor->GrayLevel[0.6]]
+}, Open  ]]
+},
+Editable->True,
+Saveable->False,
+ScreenStyleEnvironment->"Working",
+WindowSize->{710, 650},
+WindowMargins->{{Inherited, Inherited}, {Inherited, 0}},
+WindowElements->{
+ "StatusArea", "MemoryMonitor", "MagnificationPopUp", "VerticalScrollBar", 
+  "MenuBar"},
+WindowTitle->"Ising Model - Source",
+DockedCells->{},
+CellContext->Notebook,
+FrontEndVersion->"7.0 for Microsoft Windows (32-bit) (November 10, 2008)",
+StyleDefinitions->"Default.nb"
+]
+(* End of Notebook Content *)
+
+(* Internal cache information *)
+(*CellTagsOutline
+CellTagsIndex->{}
+*)
+(*CellTagsIndex
+CellTagsIndex->{}
+*)
+(*NotebookFileOutline
+Notebook[{
+Cell[CellGroupData[{
+Cell[601, 23, 203, 4, 71, "Section"],
+Cell[807, 29, 1543, 44, 92, "Input",
+ CellID->950930497],
+Cell[CellGroupData[{
+Cell[2375, 77, 4354, 103, 247, "Input",
+ CellID->715562105],
+Cell[6732, 182, 4828, 97, 532, "Output",
+ CellID->1033592697]
+}, Open  ]]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[11609, 285, 373, 9, 70, "Text",
+ CellGroupingRules->{"SectionGrouping", 25}],
+Cell[11985, 296, 838, 24, 70, "Text"]
+}, Open  ]],
+Cell[CellGroupData[{
+Cell[12860, 325, 337, 9, 70, "Text",
+ CellGroupingRules->{"SectionGrouping", 25}],
+Cell[13200, 336, 457, 15, 70, "Text",
+ CellID->1033076067],
+Cell[13660, 353, 371, 13, 70, "Text",
+ CellID->387912303],
+Cell[14034, 368, 829, 24, 70, "Text"],
+Cell[14866, 394, 1186, 33, 70, "Text"]
+}, Open  ]]
+}
+]
+*)
+
+(* End of internal cache information *)
+(* NotebookSignature vQNKubas1WDYLB0R6nGH4BK3 *)
